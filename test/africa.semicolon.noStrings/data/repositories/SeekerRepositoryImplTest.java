@@ -1,4 +1,4 @@
-package semicolon.noStrings.data.repositories;
+package data.repositories;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -56,7 +56,7 @@ public class SeekerRepositoryImplTest {
         Seeker saved = seekerRepository.save(seeker);
 
         assertNotNull(saved, "Saved Seeker should not be null");
-        assertTrue(saved.getId() > 0, "Saved Seeker should have an id greater than 0");
+        assertEquals(1, saved.getId(), "Saved Seeker should have an id greater than 0");
     }
 
     /**
