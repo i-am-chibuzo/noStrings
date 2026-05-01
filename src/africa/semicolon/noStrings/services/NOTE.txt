@@ -1,0 +1,37 @@
+SERVICES FOLDER
+===============
+
+This folder contains Service classes.
+
+A Service is where the business logic of your application lives.
+"Business logic" simply means the rules and decisions that make your app
+do what it is supposed to do — the "thinking" part of your program.
+
+WHAT A SERVICE DOES
+--------------------
+1. Receives clean, validated data from a Controller.
+2. Applies business rules — e.g. "A Seeker must be at least 18 years old",
+   "A Seeker cannot match with themselves", etc.
+3. Calls the Repository to read from or write to the data store.
+4. Returns a result (or a DTO) back to the Controller.
+
+WHAT A SERVICE DOES NOT DO
+---------------------------
+- It does NOT validate user input (that is the Controller's job).
+- It does NOT talk to the database directly (that is the Repository's job).
+- It does NOT build HTTP responses or deal with the UI layer.
+
+LAYERED ARCHITECTURE SUMMARY
+------------------------------
+  User → Controller → Service → Repository → Data store
+                         ↑
+                    Business rules live here
+
+EXAMPLE
+-------
+A SeekerService might have methods like:
+
+    registerSeeker(SeekerDTO seekerDTO)   // checks age rule, then calls repository.save()
+    updateProfile(int id, SeekerDTO dto)  // checks ownership, then calls repository.save()
+    deleteAccount(int id)                 // checks if id exists, then calls repository.deleteById()
+

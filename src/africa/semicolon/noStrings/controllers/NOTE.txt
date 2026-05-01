@@ -1,0 +1,36 @@
+CONTROLLERS FOLDER
+==================
+
+This folder contains Controller classes.
+
+A Controller is the entry point of your application — it is the first piece of
+code that receives a request from the user (or from a test / another system)
+and decides what to do with it.
+
+WHAT A CONTROLLER DOES
+-----------------------
+1. Receives input  — e.g. a user clicks "Register", typing their name and email.
+2. Validates input — checks that the data makes sense before doing anything with it
+                     (e.g. "Is the name field empty? Is the email address valid?").
+3. Calls a Service — hands the clean data over to a Service class to do the real work.
+4. Returns a result — reports back whether the operation succeeded or failed.
+
+WHAT A CONTROLLER DOES NOT DO
+------------------------------
+- It does NOT talk to the database directly (that is the Repository's job).
+- It does NOT contain business rules (that is the Service's job).
+- It does NOT build or own data models.
+
+A controller should be thin — just receive, validate, delegate, and respond.
+
+EXAMPLE
+-------
+A SeekerController might have methods like:
+
+    registerSeeker(String name, String gender, ...)
+    updateSeekerProfile(int id, ...)
+    deleteSeekerAccount(int id)
+    viewSeekerProfile(int id)
+
+Each of those methods would call the corresponding method on a SeekerService.
+

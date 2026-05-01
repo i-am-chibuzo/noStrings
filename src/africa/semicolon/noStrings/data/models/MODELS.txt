@@ -1,0 +1,64 @@
+MODELS FOLDER
+==============
+
+This folder contains Model classes (also called "Domain Objects" or "Entities").
+
+A Model is a Java class that represents a real-world thing your application
+cares about. It is the blueprint that describes what that thing looks like —
+its properties (fields) and how to access them (getters and setters).
+
+WHAT A MODEL IS
+----------------
+Think of a Model like a form. A "Seeker" form has boxes for:
+  - id             (a unique number we assign to tell Seekers apart)
+  - name           (the person's full name)
+  - dateOfBirth    (when they were born)
+  - gender         (MALE or FEMALE — stored as an enum)
+  - currentLocation (where they live right now)
+  - heightInCM     (their height in centimetres)
+  - complexion     (DARK, LIGHT, or EBONY — stored as an enum)
+
+When your program creates a Seeker object, it is filling in one of those forms.
+
+WHAT A MODEL CONTAINS
+----------------------
+1. FIELDS  — the data/properties of the object (usually private)
+2. GETTERS — methods that read a field's value  (e.g. getName())
+3. SETTERS — methods that change a field's value (e.g. setName("Ada"))
+
+Models do NOT contain business logic or database queries.
+They are pure data holders.
+
+ENUMS IN THIS FOLDER
+---------------------
+You will also find Enum classes here:
+
+  Gender     → MALE, FEMALE
+  Complexion → DARK, LIGHT, EBONY
+
+An Enum is a special type that limits a field to a fixed set of allowed values.
+Using an enum instead of a plain String prevents mistakes like storing "Femal"
+or "fem" — Java will not compile if you use a value that is not in the enum.
+
+THE ID FIELD
+-------------
+Every model has an "id" field (usually an int).
+The id is the unique identifier — like a national ID number — that lets us
+tell one Seeker apart from another even if they share the same name.
+
+In this project, the repository automatically assigns the id when you call
+save() for the first time. You never set the id yourself.
+
+EXAMPLE USAGE
+--------------
+    Seeker seeker = new Seeker();
+    seeker.setName("Ada");
+    seeker.setGender(Gender.FEMALE);
+    seeker.setDateOfBirth(LocalDate.of(1995, 6, 15));
+    seeker.setCurrentLocation("Lagos");
+    seeker.setHeightInCM(170);
+    seeker.setComplexion(Complexion.DARK);
+
+    // At this point seeker.getId() == 0 (not yet saved)
+    // After repository.save(seeker), it will have a real id like 1, 2, 3 ...
+

@@ -1,0 +1,72 @@
+THE REPOSITORY PATTERN — explained simply
+==========================================
+
+WHAT IS A REPOSITORY?
+-----------------------
+Imagine you have a filing cabinet full of employee records.
+When you need to find someone, you go to that cabinet, search by name or id,
+pull out the file, and bring it back to your desk.
+When you create a new employee, you fill in a form and put it in the cabinet.
+
+A Repository is that filing cabinet — and the methods on it are the actions
+you can perform: save, find, list all, delete.
+
+The rest of your application (Controllers, Services) never open the cabinet
+themselves. They just say "hey Repository, give me Seeker number 5", and
+the Repository handles the details of how to find it.
+
+WHY IS THIS USEFUL?
+--------------------
+1. SEPARATION OF CONCERNS
+   Your business logic (Services) does not need to know HOW data is stored.
+   Is it a List in memory? A MySQL database? A file on disk?
+   It does not matter — the Repository hides all of that.
+
+2. EASY TO SWAP OUT
+   Right now our repository stores data in a plain Java List (in memory).
+   Later, if you want to use a real database, you just write a new class
+   that implements the same interface — nothing else in the app changes.
+
+3. EASY TO TEST
+   Because we program to the interface (SeekerRepository), test code can
+   use the in-memory implementation without needing a real database running.
+
+HOW IT WORKS IN THIS PROJECT
+------------------------------
+We have TWO pieces:
+
+  SeekerRepository          ← the INTERFACE (the "contract")
+  SeekerRepositoryImpl      ← the IMPLEMENTATION (the actual filing cabinet)
+
+The interface defines WHAT operations are possible:
+    save()        — create a new record OR update an existing one
+    findById()    — look up one record by its id
+    findAll()     — get every record
+    deleteById()  — remove a record
+    count()       — how many records exist
+
+The implementation defines HOW those operations actually work.
+Today it uses an ArrayList. Tomorrow it could use a database — the
+interface stays exactly the same.
+
+THE SAVE-AS-UPSERT PATTERN
+----------------------------
+Notice that save() handles BOTH creating and updating:
+
+  • New Seeker (id == 0)  → assigns a new id and adds to the store  (CREATE)
+  • Existing Seeker (id > 0) → finds the record and replaces it     (UPDATE)
+
+This is called an "upsert" (update + insert in one step).
+Real frameworks like Spring Data JPA follow exactly this same pattern
+with their save() method.
+
+ANALOGY SUMMARY
+----------------
+  Interface      = the label on the filing cabinet ("Seekers — sorted by id")
+  Implementation = the actual drawer and files inside
+  save()         = put a new file in / replace an existing file
+  findById()     = pull out the file for person #5
+  findAll()      = dump every file on the desk
+  deleteById()   = shred the file for person #5
+  count()        = count how many files are in the cabinet
+

@@ -1,0 +1,46 @@
+EXCEPTIONS FOLDER
+==================
+
+This folder contains custom Exception classes.
+
+Java already has many built-in exceptions (e.g. NullPointerException,
+IllegalArgumentException), but sometimes none of them describe your
+specific problem clearly enough. That is when you create a custom exception.
+
+WHY CREATE CUSTOM EXCEPTIONS?
+-------------------------------
+Custom exceptions let you:
+  • Give a meaningful, domain-specific name to an error
+    (e.g. "SeekerNotFoundException" is much clearer than "RuntimeException").
+  • Carry extra information about what went wrong.
+  • Let calling code catch your specific error and handle it differently
+    from generic Java errors.
+
+HOW TO CREATE ONE
+------------------
+Extend RuntimeException (for unchecked — most common) or Exception (for checked):
+
+    public class SeekerNotFoundException extends RuntimeException {
+        public SeekerNotFoundException(String message) {
+            super(message);
+        }
+    }
+
+HOW TO USE ONE
+--------------
+Throw it in your Service when something goes wrong:
+
+    public Seeker findSeeker(int id) {
+        Seeker seeker = seekerRepository.findById(id);
+        if (seeker == null) {
+            throw new SeekerNotFoundException("No Seeker found with id: " + id);
+        }
+        return seeker;
+    }
+
+EXAMPLES OF EXCEPTIONS FOR THIS PROJECT
+-----------------------------------------
+  - SeekerNotFoundException      → thrown when a Seeker with a given id does not exist
+  - InvalidAgeException          → thrown when a Seeker is below the minimum age
+  - DuplicateSeekerException     → thrown when a Seeker with the same email already exists
+

@@ -1,0 +1,47 @@
+DTOs FOLDER  (Data Transfer Objects)
+======================================
+
+This folder contains DTO classes.
+
+A DTO (Data Transfer Object) is a simple container used to move data between
+layers of your application — for example, from the Controller to the Service,
+or from the Service back to the Controller to send to the user.
+
+WHY DO WE NEED DTOs?
+---------------------
+Your Model classes (e.g. Seeker) represent how data is stored internally.
+They often contain fields you do NOT want to expose to the outside world
+(e.g. an internal id, a password hash, or audit timestamps).
+
+A DTO lets you:
+  • Choose exactly which fields to expose — no more, no less.
+  • Carry only the data relevant for a specific operation
+    (e.g. a "RegisterSeekerDTO" only needs name, email, date of birth).
+  • Keep your internal Model separate from what users send or receive.
+
+WHAT A DTO IS
+--------------
+  - A plain Java class with fields, getters, and setters.
+  - Has NO business logic.
+  - Has NO database annotations.
+  - Is NOT the same as your Model — it is a shaped view of the data.
+
+EXAMPLE
+-------
+Instead of exposing the full Seeker model to the outside:
+
+    public class RegisterSeekerDTO {
+        private String name;
+        private String gender;       // user sends a String; Service converts to enum
+        private String dateOfBirth;  // user sends "1995-06-15"; Service parses it
+        private String currentLocation;
+        // getters & setters ...
+    }
+
+    public class SeekerResponseDTO {
+        private int    id;
+        private String name;
+        private String currentLocation;
+        // getters & setters ...
+    }
+
