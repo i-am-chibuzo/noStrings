@@ -2,7 +2,6 @@ package data.repositories;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import semicolon.noStrings.data.models.Complexion;
 import semicolon.noStrings.data.models.Gender;
 import semicolon.noStrings.data.models.Seeker;
 import semicolon.noStrings.data.repositories.SeekerRepository;
@@ -34,12 +33,8 @@ public class SeekerRepositoryImplTest {
 
     private Seeker buildSeeker(String name, Gender gender) {
         Seeker seeker = new Seeker();
-        seeker.setName(name);
-        seeker.setGender(gender);
-        seeker.setDateOfBirth(LocalDate.of(1995, 6, 15));
-        seeker.setCurrentLocation("Lagos");
-        seeker.setHeightInCM(170);
-        seeker.setComplexion(Complexion.DARK);
+        seeker.setUserName(name);
+
         return seeker;
     }
 
@@ -98,17 +93,14 @@ public class SeekerRepositoryImplTest {
         Seeker saved = seekerRepository.save(buildSeeker("Ada", Gender.FEMALE));
 
         // Change some fields on the returned object
-        saved.setName("Ada Updated");
-        saved.setCurrentLocation("Abuja");
+        saved.setUserName("Ada Updated");
 
         // Pass the modified Seeker back to save() — it carries the id now
         Seeker updated = seekerRepository.save(saved);
 
         assertNotNull(updated, "save() should return the updated Seeker");
-        assertEquals("Ada Updated", seekerRepository.findById(saved.getId()).getName(),
+        assertEquals("Ada Updated", seekerRepository.findById(saved.getId()).getUserName(),
                 "Name should reflect the update");
-        assertEquals("Abuja", seekerRepository.findById(saved.getId()).getCurrentLocation(),
-                "Location should reflect the update");
     }
 
     /**
@@ -119,7 +111,7 @@ public class SeekerRepositoryImplTest {
     void testSave_existingSeeker_doesNotIncreaseCount() {
         Seeker saved = seekerRepository.save(buildSeeker("Ada", Gender.FEMALE));
 
-        saved.setName("Ada v2");
+        saved.setUserName("Ada v2");
         seekerRepository.save(saved); // update
 
         assertEquals(1, seekerRepository.count(),
@@ -135,10 +127,10 @@ public class SeekerRepositoryImplTest {
         Seeker saved = seekerRepository.save(buildSeeker("Ada", Gender.FEMALE));
         int id = saved.getId();
 
-        saved.setName("NewName");
+        saved.setUserName("NewName");
         seekerRepository.save(saved);
 
-        assertEquals("NewName", seekerRepository.findById(id).getName(),
+        assertEquals("NewName", seekerRepository.findById(id).getUserName(),
                 "findById() should return the updated name, not the old one");
     }
 
@@ -155,7 +147,7 @@ public class SeekerRepositoryImplTest {
 
         assertNotNull(found, "Should find the Seeker that was saved");
         assertEquals(saved.getId(),   found.getId(),   "Id should match");
-        assertEquals(saved.getName(), found.getName(), "Name should match");
+        assertEquals(saved.getUserName(), found.getUserName(), "Name should match");
     }
 
     /**

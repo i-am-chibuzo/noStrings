@@ -1,15 +1,23 @@
 package semicolon.noStrings.data.models;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class Seeker {
     private int id;
-    private String name;
-    private LocalDate dateOfBirth;
-    private Gender gender;
-    private String currentLocation;
-    private int heightInCM;
-    private Complexion complexion;
+    private String userName;
+    private String password;
+
+
+    private int profileId;
+
+    public int getProfileId() {
+        return profileId;
+    }
+
+    public void setProfileId(int profileId) {
+        this.profileId = profileId;
+    }
 
     public int getId() {
         return id;
@@ -19,51 +27,19 @@ public class Seeker {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+    public String getPassword() {
+        return password;
     }
 
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getCurrentLocation() {
-        return currentLocation;
-    }
-
-    public void setCurrentLocation(String currentLocation) {
-        this.currentLocation = currentLocation;
-    }
-
-    public int getHeightInCM() {
-        return heightInCM;
-    }
-
-    public void setHeightInCM(int heightInCM) {
-        this.heightInCM = heightInCM;
-    }
-
-    public Complexion getComplexion() {
-        return complexion;
-    }
-
-    public void setComplexion(Complexion complexion) {
-        this.complexion = complexion;
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
